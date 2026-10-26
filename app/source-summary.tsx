@@ -1,0 +1,2 @@
+import {FileText,ArrowUpRight} from 'lucide-react';
+export default function SourceSummary({excerpt,url,source}:{excerpt?:string;url?:string;source?:string}){if(!url)return null;return <section className="source-summary"><div><FileText size={22}/><h2>نبذة من صفحة المصدر</h2></div>{excerpt&&<blockquote>{excerpt}…</blockquote>}<p>هذا مقتطف تعريفي للحلقة. التفريغ الكامل للتسجيل غير متوفر في الموقع حاليًا.</p><a href={url} target="_blank" rel="noopener noreferrer">قراءة تفاصيل الحلقة على {source||'المصدر'} <ArrowUpRight size={16}/></a></section>;}

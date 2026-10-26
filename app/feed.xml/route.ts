@@ -1,0 +1,5 @@
+import {publicCatalog} from '../lib/catalog-store';
+import {newestFirst} from '../lib/dates';
+export const dynamic='force-dynamic';
+const xml=(value:string)=>value.replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&apos;'}[c]!));
+export async function GET(){const catalog=await publicCatalog();const base=catalog.settings.siteUrl.replace(/\/$/,'');const items=newestFirst(catalog.episodes).slice(0,50).map(e=>{const url=base+'/episode/'+encodeURIComponent(e.id);return `<item><title>${xml(e.title)}</title><link>${xml(url)}</link><guid isPermaLink="true">${xml(url)}</guid><description>${xml(e.description)}</description>${e.publishedAt?'<pubDate>'+new Date(e.publishedAt+'T00:00:00Z').toUTCString()+'</pubDate>':''}</item>`;}).join('');return new Response(`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>بودكاست السعودية</title><link>${xml(base)}</link><description>قصص وأفكار وحلقات من بودكاست السعودية</description><language>ar</language>${items}</channel></rss>`,{headers:{'Content-Type':'application/rss+xml; charset=utf-8'}});}

@@ -1,0 +1,6 @@
+import {NextRequest,NextResponse} from 'next/server';
+import {authorized,sameOrigin} from '../../../lib/admin-auth';
+import {readCatalog,updateCatalog,validateCatalog,ConflictError} from '../../../lib/catalog-store';
+export const runtime='nodejs';export const dynamic='force-dynamic';
+export async function GET(req:NextRequest){if(!await authorized(req))return NextResponse.json({error:'سجّل الدخول أولًا'},{status:401});return NextResponse.json(await readCatalog(),{headers:{'Cache-Control':'no-store'}});}
+export async function PUT(req:NextRequest){if(!await authorized(req))return NextResponse.json({error:'سجّل الدخول أولًا'},{status:401});if(!sameOrigin(req))return NextResponse.json({error:'طلب غير مسموح'},{status:403});try{const raw=await req.text();if(Buffer.byteLength(raw)>12*1024*1024)return NextResponse.json({error:'البيانات كبيرة جدًا'},{status:413});const input=validateCatalog(JSON.parse(raw));const result=await updateCatalog(current=>{if(current.revision!==input.revision)throw new ConflictError();return input;});return NextResponse.json(result);}catch(error){return NextResponse.json({error:error instanceof ConflictError?'تغيرت البيانات في جلسة أخرى. أعد تحميل اللوحة قبل التعديل.':error instanceof Error?error.message:'تعذر حفظ البيانات'}, {status:error instanceof ConflictError?409:400});}}

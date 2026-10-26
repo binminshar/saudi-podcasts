@@ -1,0 +1,4 @@
+export function dateStamp(date?:string){return date&&/^\d{4}-\d{2}-\d{2}$/.test(date)?Date.parse(date+'T00:00:00Z')||0:0;}
+export function formatDate(date?:string){return dateStamp(date)?new Intl.DateTimeFormat('ar-SA-u-ca-gregory',{year:'numeric',month:'long',day:'numeric',timeZone:'UTC'}).format(new Date(date+'T00:00:00Z')):'التاريخ غير متوفر';}
+export function newestFirst<T extends {publishedAt?:string}>(items:T[]){return [...items].sort((a,b)=>dateStamp(b.publishedAt)-dateStamp(a.publishedAt));}
+export function validPublicationDate(value:unknown){if(value===undefined||value==='')return true;if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value))return false;const stamp=Date.parse(value+'T00:00:00Z');return Number.isFinite(stamp)&&new Date(stamp).toISOString().slice(0,10)===value;}
