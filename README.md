@@ -56,11 +56,11 @@ npm run build
 
 ## النشر: Supabase + GitHub + Render
 
-التخزين يعمل بوضعين: بدون متغيرات Supabase يُحفظ كل شيء في `.data` محليًا، ومع ضبط `SUPABASE_URL` و`SUPABASE_SERVICE_ROLE_KEY` يُحفظ الكتالوج وبيانات الأدمن في جدول `site_documents` والصور المرفوعة في bucket خاص باسم `uploads` (انظر `app/lib/storage.ts`). هذا ضروري على Render لأن قرصه مؤقت ويُمسح مع كل نشر.
+التخزين يعمل بوضعين: بدون متغيرات Supabase يُحفظ كل شيء في `.data` محليًا، ومع ضبط `SUPABASE_URL` و`SUPABASE_SERVICE_ROLE_KEY` يُحفظ الكتالوج وبيانات الأدمن في Supabase Storage داخل bucket خاص باسم `documents`، والصور المرفوعة في bucket خاص باسم `uploads` (انظر `app/lib/storage.ts`). لا يلزم أي جدول أو SQL. هذا ضروري على Render لأن قرصه مؤقت ويُمسح مع كل نشر.
 
-1. أنشئ مشروع Supabase ونفّذ `supabase/migrations/0001_site_documents.sql` في SQL Editor.
-2. انسخ `.env.example` إلى `.env` وضع `SUPABASE_URL` و`SUPABASE_SERVICE_ROLE_KEY` (مفتاح service_role سري؛ لا يُستخدم في المتصفح ولا يُرفع إلى Git).
-3. ارفع بياناتك الحالية: `npm run push:supabase` (يرفع `catalog.json` و`admin-auth.json` والصور؛ أضف `--force` لاستبدال حساب أدمن موجود).
+1. أنشئ مشروع Supabase وخذ من Project Settings → API Keys المفتاح **السري** (`sb_secret_…` أو `service_role`)، لا المفتاح publishable.
+2. انسخ `.env.example` إلى `.env` وضع `SUPABASE_URL` و`SUPABASE_SERVICE_ROLE_KEY` (المفتاح سري؛ لا يُستخدم في المتصفح ولا يُرفع إلى Git).
+3. ارفع بياناتك الحالية: `npm run push:supabase` (ينشئ الـ buckets إن لم توجد ويرفع `catalog.json` و`admin-auth.json` والصور؛ أضف `--force` لاستبدال حساب أدمن موجود).
 4. ادفع الكود إلى GitHub ثم أنشئ Blueprint في Render من `render.yaml`، وأدخل متغيري Supabase في إعدادات الخدمة. إذا لم تنقل `admin-auth.json` يمكنك ضبط `ADMIN_USERNAME` و`ADMIN_PASSWORD` لإنشاء الحساب الأول تلقائيًا.
 5. بعد النشر حدّث «نطاق الموقع» من إعدادات لوحة التحكم ليطابق الدومين النهائي؛ يعتمد عليه canonical وsitemap.xml وOpen Graph.
 
