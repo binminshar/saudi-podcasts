@@ -1,28 +1,31 @@
 {
-    "name":  "saudi-podcast",
-    "version":  "1.0.0",
-    "private":  true,
-    "engines":  { "node":  ">=20.18" },
-    "scripts":  {
-                    "dev":  "next dev --hostname 127.0.0.1",
-                    "build":  "next build",
-                    "start":  "next start",
-                    "typecheck":  "tsc --noEmit",
-                    "push:supabase":  "node scripts/push-data-to-supabase.mjs"
-                },
-    "dependencies":  {
-                         "next":  "^15.5.12",
-                         "react":  "^19.1.0",
-                         "react-dom":  "^19.1.0",
-                         "lucide-react":  "^0.468.0"
-                     },
-    "devDependencies":  {
-                            "typescript":  "^5.8.3",
-                            "@types/node":  "^22.15.0",
-                            "@types/react":  "^19.1.0",
-                            "@types/react-dom":  "^19.1.0"
-                        },
-    "overrides":  {
-                      "postcss":  "8.5.31"
-                  }
+    "name": "saudi-podcast",
+    "version": "1.0.0",
+    "private": true,
+    "engines": {
+        "node": ">=20.18"
+    },
+    "scripts": {
+        "dev": "next dev --hostname 127.0.0.1",
+        "build": "next build",
+        "start": "next start",
+        "typecheck": "tsc --noEmit",
+        "push:supabase": "node scripts/push-data-to-supabase.mjs"
+    },
+    "dependencies": {
+        "lucide-react": "^0.468.0",
+        "next": "^15.5.12",
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0"
+    },
+    "devDependencies": {
+        "@types/node": "^22.15.0",
+        "@types/react": "^19.1.0",
+        "@types/react-dom": "^19.1.0",
+        "puppeteer-core": "^25.18.1",
+        "typescript": "^5.8.3"
+    },
+    "overrides": {
+        "postcss": "8.5.31"
+    }
 }

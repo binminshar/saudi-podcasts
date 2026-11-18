@@ -28,6 +28,13 @@ const config: NextConfig = {
   images: { unoptimized: true },
   skipTrailingSlashRedirect: true,
   poweredByHeader: false,
+  async redirects() {
+    return ['post-sitemap.xml', 'page-sitemap.xml', 'category-sitemap.xml', 'author-sitemap.xml', 'post_tag-sitemap.xml', 'sitemap_index.xml', 'sitemap-index.xml'].map((s) => ({
+      source: `/${s}`,
+      destination: '/sitemap.xml',
+      permanent: true,
+    }));
+  },
   async headers() {
     return [{ source: '/(.*)', headers: securityHeaders }];
   },
