@@ -23,3 +23,5 @@ html[data-theme=light] .hero{background:var(--bg);color:var(--text)}html[data-th
 .video-source-link:hover{color:var(--purple)}
 .pill-outline{background:transparent;border:1px solid var(--line);color:var(--muted);box-shadow:none}
 .pill-outline:hover{color:var(--text);border-color:#8d6bff;filter:none}
+.pill-watch{background:linear-gradient(115deg,#e53935,#b71c1c)}
+.pill-watch:hover{background:linear-gradient(115deg,#ef5350,#d32f2f)}
